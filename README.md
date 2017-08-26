@@ -1,28 +1,22 @@
-# AngularCustomControlHelper
+# Angular Custom Control Helper
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.3.0.
+Angular2+で`[(ngModel)]`による双方向バインディングが可能なカスタムコントロールを作成するためのHelperです。
+簡素化のために一部イベントなどは省略しているので、そういったイベントを扱う際は独自に定義する必要があります。
 
-## Development server
+## Usage
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+**実際に使用する場合、必要なコードはcustom-control-helpers.tsだけです。**
 
-## Code scaffolding
++ 双方向バインディングに対応させたいコンポーネントを含むモジュールで`FormsModule`を読み込みます。
++ 双方向バインディングに対応させたいコンポーネントで`src/lib/custom-control-helpers.ts`から`CustomValueAccessor`, `customControlProviderFactory`をimport
++ 双方向バインディングに対応させたいコンポーネントで`CustomValueAccessor`を継承する。  
+（このとき、`[(ngModel)]`を通じてやり取りしたい型を型パラメータとして渡します。
++ 双方向バインディングに対応させたいコンポーネントの`@Component`に`providers: [ customControlProviderFactory(コンポーネント) ]`を追加する。
++ `writeValue(value: T)`を実装する。  
+特に値の加工が必要なければ`this.value = value`で良いです。`value`が内部変数`_value`のsetterになっているため、代入した時点で`[(ngModel)]`に変更が通知されます。
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+細かい実装方法はサンプルを確認してください。
 
-## Build
+## Demo
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
++ `ng serve`でデモが起動します。

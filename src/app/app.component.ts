@@ -6,5 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'app';
+  text: string;
+  date: Date;
+
+  onClickShowText() {
+    console.log(this.text);
+  }
+  onClickShowDate() {
+    console.log(this.date);
+  }
 }
